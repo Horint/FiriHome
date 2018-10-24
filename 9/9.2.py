@@ -1,10 +1,15 @@
-
+# https://www.reddit.com/r/Python/comments/9q6xtx/things_i_wish_python_did_differently/
 import requests
 
-url = 'http://starlab.ru/showthread.php?t=29557'
+url = 'https://www.reddit.com/r/Python/comments/9q6xtx/things_i_wish_python_did_differently'
 r = requests.get(url)
+p = requests.post(url)
+# with open ('test.txt', 'w') as out_put:
+#     out_put.write(r.text)
+with open ('1test.txt', 'w') as out_put:
+    out_put.write(p.text)
 
-with open ('test.txt', 'w') as out_put:
-    out_put.write(r.text)
-
-<!-- END TEMPLATE: bbcode_quote --> Место начала сообщения
+#
+# <!-- END TEMPLATE: bbcode_quote --> Место начала сообщения
+#
+# <!-- message -->
