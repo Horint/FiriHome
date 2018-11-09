@@ -17,10 +17,9 @@ app.config.update(
 
 db = SQLAlchemy(app)
 #
-# class PostForm(ModelForm):
-#     class Meta:
-#         model = Text
-
+class PostForm(FlaskForm):
+    author = fields.StringField(validators=[ validators.DataRequired()])
+    text =fields.StringField(validators= [validators.DataRequired()])
 
 class GuestBookItem(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -39,26 +38,33 @@ class GuestBookItem(db.Model):
             'time_of_writing': self.time_of_writing,
         }
 
-
 @app.route('/', methods =['GET'])
 def index():
     book = GuestBookItem.query.all()
     return jsonify([b.to_dict() for b in book])
 
-@app.route('/add', methods = ['POST'])
+# @app.route('/add', methods = ['POST'])
+# def my_add():
+#
+#     print(request.form)
+#     my_author = request.form["author"]
+#     text = request.form["text"]
+#     my_post = GuestBookItem (author=my_author, text=text, time_of_writing=datetime.now()  )
+#     db.session.add(my_post), db.session.commit()
+#     # return db.session.add(my_post), db.session.commit()
+
+
+@app.route('/add', methods=['POST'])
 def my_add():
     print(request.form)
-    my_author = request.form["author"]
-    text = request.form["text"]
-    # my_text = request.form["text"]
+    form = PostForm(request.form)
 
-    # if form.validate():
-    #     text_author_to_add = Text(**form.data)
-    #     db.session.add(text_author_to_add)
-    #     db.session.commit()
-    my_post = GuestBookItem (author=my_author, text=text, time_of_writing=datetime.now()  )
-    db.session.add(my_post), db.session.commit()
-    # return db.session.add(my_post), db.session.commit()
+    if form.validate():
+        post = form(**form.data)
+        db.session.add(post)
+        db.session.commit()
+
+        flash('Post created!')
 
 if __name__ == '__main__':
 
