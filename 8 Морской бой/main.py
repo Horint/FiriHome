@@ -1,10 +1,8 @@
-from model import (
-    dot,
-    Pole,
-)
+from model import dot, Pole
 
 a = Pole()
 b = Pole()
+
 
 while a.x_All != 0:
     ship = input('Первый игрок, добавьте корабль:')
@@ -19,21 +17,31 @@ b.x_All = 10
 
 while a.x_All or b.x_All != 0:
 
-    a.end_strike = False
-    b.end_strike = False
+    end_strike = False
 
-    while a.end_strike == False:
+    while end_strike == False:
         print('Ход первого игрока')
         strike = input('Введите координаты: ')
         b.strike(strike)
         b.x_All -= 1
-        print(a.end_strike)
+        if b.shot == True:
+            end_strike = False
+        else:
+            end_strike = True
 
-    while b.end_strike == False:
+        print(end_strike)
+
+    end_strike = False
+
+    while end_strike == False:
         print('Ход второго игрока')
         strike = input('Введите координаты: ')
         a.strike(strike)
         a.x_All -= 1
+        if a.shot == True:
+            end_strike = False
+        else:
+            end_strike = True
 
 print('Конец')
 

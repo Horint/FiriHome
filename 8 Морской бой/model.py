@@ -19,7 +19,7 @@ def dot(sam_pole):
 
 class Pole():
 
-    def __init__(self):
+    def __init__(self,):
         self.x_All = 10
 
         new_list = []
@@ -33,7 +33,8 @@ class Pole():
 
         self.pole = {a: '◻' for a in new_list}
         self.strike_pole = {a: '◻' for a in new_list}
-        self.end_strike = []
+        self.shot = bool
+
 
     def add_ship(self, *args):
         try:
@@ -54,14 +55,16 @@ class Pole():
         try:
             if self.pole[coor] == '■':
                 self.strike_pole[coor] = '⚑'
-                self.end_strike = False
+                self.shot = True
+
             else:
-                self.end_strike = True
+                self.shot = False
                 self.strike_pole[coor] = '✘'
-        except KeyError:
+
+        except NameError:
             print('Неправильный порядок ввода \n    Правильно вводить 1а')
 
-        return dot(self.strike_pole)
+        return dot(self.strike_pole), self.shot
 
 
 
