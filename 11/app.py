@@ -14,7 +14,7 @@ NUMBER = random.randint(1, 100)
 @app.route("/", methods=["GET"])
 def index():
     global NUMBER
-    NUMBER = random.randint(1, 100)
+    # NUMBER = random.randint(1, 100)
     return "Число загадано"
 
 
@@ -33,7 +33,7 @@ def guess():
             return "<"
         else:
             NUMBER = random.randint(1, 100)
-            return "="
+            return "=", "Число загадано"
     else:
         return "Please add into form data value with key 'number'"
 

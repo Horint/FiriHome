@@ -1,35 +1,21 @@
-# -*- coding: utf-8 -*-
-from flask import Flask, render_template
-from forms import LoginForm
-app = Flask(__name__)
-app.config.update(
-    DEBUG=True,
-    SECRET_KEY='should always be secret'
-               )
-# @app.route('/')
-# @app.route('/index')
-# def index():
-#     user = {'username': 'Эльдар Рязанов'}
-#     posts = [
-#         {
-#             'author': {'username': 'John'},
-#             'body': 'Beautiful day in Portland!'
-#         },
-#         {
-#             'author': {'username': 'Susan'},
-#             'body': 'The Avengers movie was so cool!'
-#         },
-#         {
-#             'author': {'username': 'Ипполит'},
-#             'body': 'Какая гадость эта ваша заливная рыба!!'
-#         }
-#     ]
-#     return render_template('test.html', title='Home', user=user, posts=posts)a
+from datetime import datetime
+from app import db
 
-@app.route('/login')
-def login():
-    form = LoginForm()
-    return render_template('login.html', title = 'Sign In', form = form)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    email = db.Column(db.String(120), index=True, unique=True)
+    password_hash = db.Column(db.String(128))
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
-if __name__ == '__main__':
-    app.run()
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Post {}>'.format(self.body)

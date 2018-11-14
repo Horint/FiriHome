@@ -1,0 +1,5 @@
+Blog by Noname
+
+{% block main%}
+
+{% endblock %}

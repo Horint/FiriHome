@@ -1,0 +1,5 @@
+{% extends 'blog.txt' %}
+
+{%block main%}
+
+{% endblock %}
