@@ -4,10 +4,10 @@ from wtforms_alchemy import ModelForm
 
 from model import BlogAuthor, BlogComent
 
-class PostAuthor(ModelForm):
+class BlogForm(ModelForm):
     class Meta:
         model = BlogAuthor
 
-class PostComent(ModelForm):
+class ComentForm(ModelForm):
     class Meta:
         model = BlogComent

@@ -1,4 +1,4 @@
-from app import db
+from dz14.app import db
 
 class BlogAuthor(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

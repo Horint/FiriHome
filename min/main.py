@@ -1,5 +1,8 @@
+# from model import BlogAuthor, BlogComent
+# from form import PostAuthor, PostComent
 from flask import Flask, jsonify, url_for, request
 from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__, template_folder='templates')
 app.config.update(
@@ -10,9 +13,7 @@ app.config.update(
 )
 
 db = SQLAlchemy(app)
-
-from form import PostAuthor, PostComent
-from model import BlogAuthor, BlogComent
+db.create_all()
 
 # class BlogAuthor(db.Model):
 #     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -40,7 +41,6 @@ from model import BlogAuthor, BlogComent
 #             'coment_to_blog': self.title,
 #             # 'text': self.text,
 #             # 'time_of_writing': self.time_of_writing,
-
 @app.route('/', methods =['GET'])
 def index():
     blog = BlogAuthor.query.all()
@@ -53,29 +53,26 @@ def index_coment():
 
 @app.route('/add/author', methods=['POST'])
 def my_add():
-    form = PostAuthor(request.form)
+    form = BlogForm(request.form)
     if form.validate():
         my_post = BlogAuthor(**form.data)
         db.session.add(my_post)
         db.session.commit()
-
     return
 
 @app.route('/add/comment', methods=['POST'])
 def my_add_post():
     form = PostComent(request.form)
-
     if form.validate():
-        my_post = BlogComent(**form.data)
+        my_post = ComentForm(**form.data)
         db.session.add(my_post)
         db.session.commit()
-
     return
 
-
 if __name__ == '__main__':
-
-    db.create_all()
+    from model import BlogAuthor, BlogComent
+    from form import PostAuthor, PostComent
+    # db.create_all()
     db.session.commit()
     app.run()
 
