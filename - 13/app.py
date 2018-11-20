@@ -13,7 +13,7 @@ app.config.update(
 
 db = SQLAlchemy(app)
 
-class GuestBookItem(db.Model):
+class GuestBookItem(db.Mwwodel):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     author = db.Column(db.String(50), nullable=False)
     text = db.Column(db.String(100), nullable=False)
